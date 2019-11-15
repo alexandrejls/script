@@ -50,7 +50,7 @@ LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
 DAHDITOOLS="http://downloads.asterisk.org/pub/telephony/dahdi-tools/dahdi-tools-current.tar.gz"
 LIBPRI="http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz"
-ASTERISK="http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz"
+ASTERISK="http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-17-current.tar.gz"
 PTBRCORE="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-core-pt-BR-sln16.zip"
 PTBREXTRA="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-extra-pt-BR-sln16.zip"
 SOUNDS="/var/lib/asterisk/sounds/pt_BR"
@@ -190,9 +190,9 @@ echo
 echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
-	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
+	wget -O asterisk-17-current.tar.gz $ASTERISK &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
-	tar -zxvf asterisk.tar.gz &>> $LOG
+	tar -zxvf asterisk-17-current.tar.gz &>> $LOG
 	# acessando diretório do asterisk
 	cd asterisk*/ &>> $LOG
 	# resolvendo as dependências do suporte a Música e Sons em MP3
