@@ -64,7 +64,6 @@ export DEBIAN_FRONTEND="noninteractive"
 # opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
 echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 #
-echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
 sleep 5
