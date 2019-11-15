@@ -1,3 +1,5 @@
+# !/bin/bash
+bash repositorio.sh
 # O Asterisk é um software livre, de código aberto, que implementa em software os recursos encontrados em um PABX 
 # convencional, utilizando tecnologia de VoIP. Ele foi criado pelo Mark Spencer em 1999.
 # Inicialmente desenvolvido pela empresa Digium, hoje recebe contribuições de programadores ao redor de todo o mundo. 
@@ -67,4 +69,4 @@ echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "DAHDI instalado com sucesso!!!, continuando com o script..."
-bash repositorio.sh
+
