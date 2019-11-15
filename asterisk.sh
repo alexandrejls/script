@@ -33,6 +33,18 @@ HORAINICIAL=`date +%T`
 # $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
+# Exportando o recurso de Noninteractive do Debconf para não solicitar telas de configuração
+export DEBIAN_FRONTEND="noninteractive"
+#
+# Script de instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x
+# opção do comando echo: -e (enable interpretation of backslash escapes), \n (new line)
+# opção do comando hostname: -I (all IP address)
+# opção do comando date: + (format), %d (day), %m (month), %Y (year 1970), %H (hour 24), %M (minute 60)
+echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
+#
+echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
+echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
+#
 # Declarando as variaveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
 DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
 #
@@ -55,5 +67,4 @@ echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "DAHDI instalado com sucesso!!!, continuando com o script..."
-sleep 5
-#
+bash repositorio.sh
