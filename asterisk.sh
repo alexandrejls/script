@@ -28,15 +28,31 @@
 # opção do comando date: +%T (Time)
 HORAINICIAL=`date +%T`
 #
+# Variáveis para validar o ambiente, verificando se o usuário e "root", versão do ubuntu e kernel
+# opções do comando id: -u (user)
+# opções do comando: lsb_release: -r (release), -s (short), 
+# opões do comando uname: -r (kernel release)
+# opções do comando cut: -d (delimiter), -f (fields)
+# opção do shell script: piper | = Conecta a saída padrão com a entrada padrão de outro comando
+# opção do shell script: acento crase ` ` = Executa comandos numa subshell, retornando o resultado
+# opção do shell script: aspas simples ' ' = Protege uma string completamente (nenhum caractere é especial)
+# opção do shell script: aspas duplas " " = Protege uma string, mas reconhece $, \ e ` como especiais
+USUARIO=`id -u`
+UBUNTU=`lsb_release -rs`
+KERNEL=`uname -r | cut -d'.' -f1,2`
+#
+# Variável do caminho do Log dos Script utilizado nesse curso (VARIÁVEL MELHORADA)
+# opções do comando cut: -d (delimiter), -f (fields)
+# $0 (variável de ambiente do nome do comando)
 LOG="/var/log/$(echo $0 | cut -d'/' -f2)"
 #
 # Declarando as variaveis de Download do Asterisk: http://downloads.asterisk.org/pub/telephony/
 DAHDI="http://downloads.asterisk.org/pub/telephony/dahdi-linux/dahdi-linux-current.tar.gz"
 DAHDITOOLS="http://downloads.asterisk.org/pub/telephony/dahdi-tools/dahdi-tools-current.tar.gz"
 LIBPRI="http://downloads.asterisk.org/pub/telephony/libpri/libpri-current.tar.gz"
-ASTERISK="http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-17.0.0.tar.gz"
-PTBRCORE="https://www.asterisksounds.org/sites/asterisksounds.org/files/sounds/pt-BR/download/asterisk-sounds-core-pt-BR-3.8.3.zip"
-PTBREXTRA="https://www.asterisksounds.org/sites/asterisksounds.org/files/sounds/pt-BR/download/asterisk-sounds-extra-pt-BR-1.11.10.zip"
+ASTERISK="http://downloads.asterisk.org/pub/telephony/asterisk/asterisk-16-current.tar.gz"
+PTBRCORE="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-core-pt-BR-sln16.zip"
+PTBREXTRA="https://www.asterisksounds.org/pt-br/download/asterisk-sounds-extra-pt-BR-sln16.zip"
 SOUNDS="/var/lib/asterisk/sounds/pt_BR"
 COUNTRYCODE="55"
 #
@@ -51,42 +67,58 @@ echo -e "Início do script $0 em: `date +%d/%m/%Y-"("%H:%M")"`\n" &>> $LOG
 echo -e "Instalação do Asterisk no GNU/Linux Ubuntu Server 18.04.x\n"
 echo -e "Aguarde, esse processo demora um pouco dependendo do seu Link de Internet...\n"
 echo -e "Após a instalação, para acessar o CLI do Asterisk, digite o comando: asterisk -rvvvv"
+sleep 5
+echo
 #
 echo -e "Adicionando o Repositório Universal do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository universe &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Adicionando o Repositório Multiversão do Apt, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	add-apt-repository multiverse &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Atualizando as listas do Apt, aguarde..."
 	#opção do comando: &>> (redirecionar a saída padrão)
 	apt update &>> $LOG
 echo -e "Listas atualizadas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Atualizando o sistema, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y upgrade &>> $LOG
 echo -e "Sistema atualizado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Removendo software desnecessários, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes)
 	apt -y autoremove &>> $LOG
 echo -e "Software removidos com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Instalando o Asterisk, aguarde..."
+echo
+#
 echo -e "Instalando as dependências do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes) | $(uname -r) = kernel-release, \ (bar left) quedra de linha na opção do apt
 	apt install -y build-essential libssl-dev libelf-dev libncurses5-dev libnewt-dev libxml2-dev linux-headers-$(uname -r) \
 	libsqlite3-dev uuid-dev subversion libjansson-dev sqlite3 autoconf automake libtool libedit-dev flex bison libtool \
-	libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev vim net-tools &>> $LOG
+	libtool-bin unzip sox openssl zlib1g-dev unixodbc unixodbc-dev vim &>> $LOG
 echo -e "Dependências instaladas com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -107,6 +139,8 @@ echo -e "Download e instalação do DAHDI, aguarde..."
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "DAHDI instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo	
 #
 echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -129,6 +163,8 @@ echo -e "Download e instalação do DAHDI Tools, aguarde..."
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "DAHDI Tools instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo	
 #
 echo -e "Download e instalação do LIBPRI, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -149,13 +185,15 @@ echo -e "Download e instalação do LIBPRI, aguarde..."
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "LIBPRI instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
-	wget -O asterisk-17.0.0.tar.gz $ASTERISK &>> $LOG
+	wget -O asterisk.tar.gz $ASTERISK &>> $LOG
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
-	tar -zxvf asterisk-17.0.0.tar.gz &>> $LOG
+	tar -zxvf asterisk.tar.gz &>> $LOG
 	# acessando diretório do asterisk
 	cd asterisk*/ &>> $LOG
 	# resolvendo as dependências do suporte a Música e Sons em MP3
@@ -196,6 +234,8 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando cd: .. (dois pontos sequenciais - Subir uma pasta)
 	cd ..
 echo -e "Asterisk instalado com sucesso!!!, continuando com o script..."
+sleep 5
+echo		
 #
 echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -203,20 +243,22 @@ echo -e "Download e configuração do Sons em Português/Brasil do Asterisk, agu
 	mkdir -v $SOUNDS &>> $LOG
 	# copiando o script convert.sh para conversão dos formatas de sons para o padrão do Asterisk
 	# opção do comando cp: -v (verbose)
-	cp -v convert.sh $SOUNDS &>> $LOG
+	cp -v conf/convert.sh $SOUNDS &>> $LOG
 	# acessando o diretório dos sons em pt_BR
 	cd $SOUNDS &>> $LOG
 	# opção do comando wget: -O (file)
-	wget -O asterisk-sounds-core-pt-BR-3.8.3.zip $PTBRCORE &>> $LOG
-	wget -O asterisk-sounds-extra-pt-BR-1.11.10.zip $PTBREXTRA &>> $LOG
+	wget -O core.zip $PTBRCORE &>> $LOG
+	wget -O extra.zip $PTBREXTRA &>> $LOG
 	# opção do comando unzip: -o (overwrite)
-	unzip -o asterisk-sounds-core-pt-BR-3.8.3.zip &>> $LOG
-	unzip -o asterisk-sounds-extra-pt-BR-1.11.10.zip &>> $LOG
+	unzip -o core.zip &>> $LOG
+	unzip -o extra.zip &>> $LOG
 	# converte os sons da pasta para outros formatos
 	bash convert.sh &>> $LOG
 	# opção do comando cd: - (traço, rollback voltar a pasta anterior)
 	cd - &>> $LOG
 echo -e "Configuração do Sons em Português/Brasil feito com sucesso!!!!, continuado com o script..."
+sleep 5
+echo
 #
 echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, aguarde..."
 	# fazendo o backup das confgurações originais dos arquivos de configuração
@@ -228,10 +270,12 @@ echo -e "Atualizando os arquivos de Ramais SIP, Plano de Discagem e Módulos, ag
 	mv -v /etc/asterisk/modules.conf /etc/asterisk/modules.conf.bkp &>> $LOG
 	# atualizando os arquivos de configurações
 	# opção do comando cp: -v (verbose)
-	cp -v sip.conf /etc/asterisk/sip.conf &>> $LOG
-	cp -v extensions.conf /etc/asterisk/extensions.conf &>> $LOG
-	cp -v modules.conf /etc/asterisk/modules.conf &>> $LOG
+	cp -v conf/sip.conf /etc/asterisk/sip.conf &>> $LOG
+	cp -v conf/extensions.conf /etc/asterisk/extensions.conf &>> $LOG
+	cp -v conf/modules.conf /etc/asterisk/modules.conf &>> $LOG
 echo -e "Arquivos atualizados com sucesso!!!, continuando com o script"
+sleep 5
+clear
 #
 echo -e "Configuração da Segurança do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
@@ -267,11 +311,15 @@ echo -e "Configuração da Segurança do Asterisk, aguarde..."
 	# reinicializando o serviços do asterisk
 	sudo systemctl restart asterisk &>> $LOG
 echo -e "Configuração da segurança do Asterisk feita com sucesso!!!, continuando com o script..."
+sleep 5
+clear
 #
 echo -e "Verificando a porta de Conexão do Protocolo SIP, aguarde..."
 	#opção do comando netstat: -a (all), -n (numeric)
 	netstat -an | grep 5060
 echo -e "Porta de conexão verificada com sucesso!!!, continuando com o script..."
+sleep 5
+echo
 #
 echo -e "Instalação do Asterisk feita com Sucesso!!!"
 	# script para calcular o tempo gasto (SCRIPT MELHORADO, CORRIGIDO FALHA DE HORA:MINUTO:SEGUNDOS)
