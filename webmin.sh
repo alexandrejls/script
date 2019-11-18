@@ -67,7 +67,7 @@ echo
 echo -e "Instalando as dependências do Webmin, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando apt: -y (yes), \ (Bar, opção de quebra de linha no apt)
-	apt-get install webmin &>> $LOG
+	apt-get -y install webmin &>> $LOG
 echo -e "Instalação das dependências feita com sucesso!!!, continuando com o script..."
 sleep 5
 echo
