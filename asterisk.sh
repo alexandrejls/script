@@ -191,24 +191,24 @@ echo -e "Download e instalação do Asterisk, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	# opção do comando wget: -O (file)
 	wget -O asterisk-17-current.tar.gz $ASTERISK &>> $LOG
-echo -e "Download com sucesso, aguarde..."
+echo   "Download com sucesso, aguarde..."
 	# opção do comando tar: -z (gzip), -x (extract), -v (verbose), -f (file)
 	tar -zxvf asterisk-17-current.tar.gz &>> $LOG
-echo -e "Descompactação com sucesso, aguarde..."
+echo   "Descompactação com sucesso, aguarde..."
 	# acessando diretório do asterisk
 	cd asterisk*/ &>> $LOG
-echo -e "Resolvendo as dependências do suporte a Música e Sons em MP3, aguarde..."
+echo   "Resolvendo as dependências do suporte a Música e Sons em MP3, aguarde..."
 	bash contrib/scripts/get_mp3_source.sh &>> $LOG
-echo -e "Resolvendo as dependências do suporte ao Codec iLBC, aguarde..."
+echo   "Resolvendo as dependências do suporte ao Codec iLBC, aguarde..."
 	bash contrib/scripts/get_ilbc_source.sh &>> $LOG
-echo -e "Instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections, aguarde..."
+echo   "Instalando as dependência do MP3 e ILBC utilizando o debconf-set-selections, aguarde..."
 	# opção do comando | (piper): (Conecta a saída padrão com a entrada padrão de outro comando)
 	echo "libvpb1 libvpb1/countrycode $COUNTRYCODE" | debconf-set-selections &>> $LOG
 	# opção do comando yes: yes é um comando utilizado, normalmente, em conjunto com outro, para responder sempre 
 	# positivamente (ou negativamente) às perguntas do segundo programa
-echo -e "Install_prereq install, aguarde..."
+echo   "Install_prereq install, aguarde..."
 	yes | bash contrib/scripts/install_prereq install &>> $LOG
-echo -e "Preparação e configuração do source para compilação, aguarde..."
+echo   "Preparação e configuração do source para compilação, aguarde..."
 	./configure &>> $LOG
 	# desfaz o processo de compilação anterior
 	make clean  &>> $LOG
@@ -216,21 +216,21 @@ echo -e "Preparação e configuração do source para compilação, aguarde..."
 	# menu de seleção de configuração do Asterisk (recomendado)
 	make menuselect
 	clear
-	echo -e "Compilando e instalando o Asterisk, aguarde...."
+echo   "Compilando e instalando o Asterisk, aguarde...."
         #Compila todas as opções do software marcadas nas opções do make menuselect"
 	make all &>> $LOG
 	# executa os comandos para instalar o programa com as opções do make maneselect
 	make install &>> $LOG
-echo -e "Instalando um conjunto de arquivos de configuração de amostra para o Asterisk"
+echo   "Instalando um conjunto de arquivos de configuração de amostra para o Asterisk"
 	make samples &>> $LOG
-echo -e "Instala um conjunto de configuração básica para o Asterisk"
+echo   "Instala um conjunto de configuração básica para o Asterisk"
 	make basic-pbx &>> $LOG
 	# instala um conjunto de documentção para o Asterisk
 	# habilitar esse recurso, o processo de compilação demora bastante
 	#make progdocs &>> $LOG
 	# instala um conjunto de scripts de inicialização do Asterisk (systemctl)
 	make config &>> $LOG
-echo -e "Instala um conjunto de scripts de configuração dos Logs do Asterisk (rsyslog)"
+echo   "Instala um conjunto de scripts de configuração dos Logs do Asterisk (rsyslog)"
 	make install-logrotate &>> $LOG
 	# inicializando o serviço do Asterisk
 	sudo systemctl start asterisk &>> $LOG
