@@ -40,6 +40,7 @@ echo -e "Adicionando o Repositório e Assinatura, aguarde..."
 	# opção do comando: &>> (redirecionar a saída padrão)
 	cd /root
 	wget http://www.webmin.com/jcameron-key.asc  &>> $LOG
+	apt-get install perl libnet-ssleay-perl openssl libauthen-pam-perl libpam-runtime libio-pty-perl apt-show-versions python &>> $LOG
 	apt-key add jcameron-key.asc  &>> $LOG
 	apt-get install apt-transport-https &>> $LOG
 echo -e "Repositório adicionado com sucesso!!!, continuando com o script..."
